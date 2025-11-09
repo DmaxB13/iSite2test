@@ -111,6 +111,7 @@ function renderCard(player){
   `;
   return div;
 }
+
 async function loadPlayersFromTextarea() {
   const raw = namesInput.value || '';
   const names = raw.split(',').map(s => s.trim()).filter(Boolean);

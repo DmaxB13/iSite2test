@@ -70,3 +70,12 @@ button[disabled]{opacity:.5;cursor:not-allowed}
 .card .name{font-weight:700}
 .card .uuid{color:var(--muted);word-break:break-all;font-size:11px;margin-top:6px}
 .card a{display:inline-block;margin-top:8px;color:var(--accent);text-decoration:none;font-size:12px}
+
+.viewer {
+  width: 300px;
+  height: 400px;
+  margin: 0 auto;
+  background: #0b1220;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}

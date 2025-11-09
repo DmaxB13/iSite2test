@@ -1,6 +1,6 @@
 body {
   background: #0a0f1a;
-  color: white;
+  color: #fff;
   font-family: system-ui, sans-serif;
   padding: 20px;
   text-align: center;
@@ -40,4 +40,10 @@ button {
   background: #111a2e;
   border-radius: 10px;
   box-shadow: 0 0 12px rgba(0,0,0,0.6);
+}
+
+.player-label {
+  margin-top: 6px;
+  color: #cfd8e3;
+  font-size: 0.9rem;
 }

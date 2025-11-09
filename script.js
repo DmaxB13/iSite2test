@@ -4,7 +4,10 @@ const gallery = document.getElementById("gallery");
 const statusEl = document.getElementById("status");
 
 const PLAYERDB = "https://playerdb.co/api/player/minecraft/";
-const CRAFATAR_RENDER = (uuid) => `https://crafatar.com/renders/body/${uuid}?overlay`;
+
+// Includes third layer and cape
+const CRAFATAR_RENDER = (uuid) =>
+  `https://crafatar.com/renders/body/${uuid}?overlay&cape`;
 
 function showStatus(msg) {
   statusEl.textContent = msg;

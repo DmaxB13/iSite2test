@@ -1,68 +1,72 @@
-// Use SkinViewer from ES module CDN
-import { SkinViewer, WalkingAnimation } from "https://unpkg.com/skinview3d@3.0.0-beta.2/dist/skinview3d.min.js";
-
-const input = document.getElementById("names");
-const button = document.getElementById("loadBtn");
-const gallery = document.getElementById("gallery");
-const statusEl = document.getElementById("status");
-
-const PLAYERDB = "https://playerdb.co/api/player/minecraft/";
-const CRAFATAR_SKIN = (uuid) => `https://crafatar.com/skins/${uuid}?overlay&cape`;
-
-function showStatus(msg) {
-  statusEl.textContent = msg;
-}
-
-async function getUUID(nameOrUUID) {
-  if (/^[0-9a-fA-F-]{32,36}$/.test(nameOrUUID)) return nameOrUUID.replace(/-/g, "");
-  const res = await fetch(PLAYERDB + encodeURIComponent(nameOrUUID));
-  if (!res.ok) throw new Error(`Player not found: ${nameOrUUID}`);
-  const data = await res.json();
-  return data?.data?.player?.id;
-}
-
-function renderViewer(uuid, name) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "viewer";
-  gallery.appendChild(wrapper);
-
-  const canvas = document.createElement("canvas");
-  wrapper.appendChild(canvas);
-
-  const viewer = new SkinViewer({
-    canvas,
-    width: 200,
-    height: 300
+// Wait until DOM loaded
+window.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('skinCanvas');
+  // Setup skin viewer
+  const skinViewer = new skinview3d.SkinViewer({
+    canvas: canvas,
+    width: 400,
+    height: 500,
+    skin: null,     // will be set later
+    // Enable outer layer by default
+    // skinview3d automatically shows outer layer if skin file has it
+    autoRotate: true
   });
 
-  viewer.loadSkin(CRAFATAR_SKIN(uuid));
-  viewer.autoRotate = true;
-  viewer.autoRotateSpeed = 0.5;
-  viewer.zoom = 0.8;
-  viewer.controls.enableZoom = false;
-  viewer.animation = new WalkingAnimation(); // mannequin pose
+  // You can tweak camera FOV, zoom, background
+  skinViewer.fov = 50;
+  skinViewer.zoom = 1.2;
+  skinViewer.background = 0x1d1d1d;
 
-  const label = document.createElement("div");
-  label.className = "player-label";
-  label.textContent = name;
-  gallery.appendChild(label);
-}
+  const usernameInput = document.getElementById('usernameInput');
+  const loadBtn = document.getElementById('loadBtn');
 
-button.addEventListener("click", async () => {
-  gallery.innerHTML = "";
-  const names = input.value.split(",").map(n => n.trim()).filter(Boolean);
-  if (!names.length) return showStatus("Enter at least one name or UUID");
-  showStatus("Loading...");
-  for (const n of names) {
+  loadBtn.addEventListener('click', () => {
+    const user = usernameInput.value.trim();
+    if (!user) {
+      alert('Please enter a Minecraft username or UUID');
+      return;
+    }
+    fetchSkinAndLoad(user);
+  });
+
+  // Function: fetch skin URL from username/UUID then load into viewer
+  async function fetchSkinAndLoad(nameOrUuid) {
     try {
-      const uuid = await getUUID(n);
-      renderViewer(uuid, n);
+      // Convert username to UUID if needed
+      let uuid = nameOrUuid;
+      if (nameOrUuid.length <= 16) { // assume username
+        const resp = await fetch(`https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(nameOrUuid)}`);
+        if (!resp.ok) throw new Error('Username not found');
+        const data = await resp.json();
+        uuid = data.id;
+      }
+
+      // Fetch skin texture url
+      const profileResp = await fetch(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
+      if (!profileResp.ok) throw new Error('Profile fetch failed');
+      const profileData = await profileResp.json();
+      const properties = profileData.properties || [];
+      const skinProp = properties.find(p => p.name === 'textures');
+      if (!skinProp) throw new Error('Skin texture not found');
+      const raw = JSON.parse(atob(skinProp.value));
+      const skinUrl = raw.textures.SKIN.url;
+
+      // Load skin into viewer
+      skinViewer.loadSkin(skinUrl);
+
+      // Optionally load cape if exists
+      if (raw.textures.CAPE && raw.textures.CAPE.url) {
+        skinViewer.loadCape(raw.textures.CAPE.url);
+      } else {
+        skinViewer.loadCape(null);
+      }
+
     } catch (err) {
       console.error(err);
-      const errDiv = document.createElement("div");
-      errDiv.textContent = `❌ ${n}: ${err.message}`;
-      gallery.appendChild(errDiv);
+      alert('Error loading skin: ' + err.message);
     }
   }
-  showStatus("Done!");
+
+  // Optionally you can load a default skin initially
+  fetchSkinAndLoad('Notch');  // replace with your default
 });

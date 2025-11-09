@@ -1,0 +1,72 @@
+:root{
+  --bg: #0f1724;
+  --card: #0b1220;
+  --accent: #60a5fa;
+  --muted: #94a3b8;
+  --white: #eef2ff;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background: linear-gradient(180deg,#071029 0%, #071b2b 100%);
+  color:var(--white);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.container{
+  max-width:980px;
+  margin:32px auto;
+  padding:24px;
+  background:rgba(255,255,255,0.03);
+  border-radius:12px;
+  box-shadow:0 6px 30px rgba(0,0,0,0.5);
+}
+
+h1{margin:0 0 12px;font-size:1.6rem}
+label{display:block;color:var(--muted);margin-bottom:6px}
+textarea{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  color:var(--white);
+  resize:vertical;
+}
+
+.controls{display:flex;gap:8px;margin-top:8px}
+button{
+  background:var(--accent);
+  border:none;
+  padding:8px 12px;
+  color:#04213a;
+  font-weight:600;
+  border-radius:8px;
+  cursor:pointer;
+}
+button[disabled]{opacity:.5;cursor:not-allowed}
+.status{margin-top:12px;color:var(--muted)}
+
+.gallery{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+  gap:14px;
+}
+
+.card{
+  background:var(--card);
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 3px 10px rgba(0,0,0,0.45);
+  font-size:13px;
+}
+.card img{width:80px;height:80px;border-radius:8px;display:block;margin:0 auto 8px}
+.card .name{font-weight:700}
+.card .uuid{color:var(--muted);word-break:break-all;font-size:11px;margin-top:6px}
+.card a{display:inline-block;margin-top:8px;color:var(--accent);text-decoration:none;font-size:12px}

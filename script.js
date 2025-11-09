@@ -112,12 +112,26 @@ function renderCard(player){
   return div;
 }
 
-async function loadPlayersFromTextarea(){
+async function loadPlayersFromTextarea() {
   const raw = namesInput.value || '';
   const names = raw.split(',').map(s => s.trim()).filter(Boolean);
-  if(names.length === 0){ showStatus('No names provided'); return; }
-  loadBtn.disabled = true;
-  showStatus(`Resolving ${names.length} player(s)...`);
+  if (names.length === 0) { showStatus('No names provided'); return; }
+  showStatus('Loading skin...');
+
+  try {
+    const first = names[0]; // for simplicity, render first player only
+    const data = await fetchPlayerInfo(first);
+    const skinUrl = data.skin;
+
+    const viewer = setupViewer();
+    viewer.loadSkin(skinUrl);
+    viewer.animation = new skinview3d.IdleAnimation();
+    showStatus(`Rendered ${data.name}'s skin on a mannequin.`);
+  } catch (err) {
+    showStatus('Error loading: ' + err.message);
+  }
+}
+
 
   // check cache first and only fetch missing ones (but pMap fetch handles cache)
   try {

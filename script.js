@@ -111,7 +111,6 @@ function renderCard(player){
   `;
   return div;
 }
-
 async function loadPlayersFromTextarea() {
   const raw = namesInput.value || '';
   const names = raw.split(',').map(s => s.trim()).filter(Boolean);
@@ -131,6 +130,7 @@ async function loadPlayersFromTextarea() {
     showStatus('Error loading: ' + err.message);
   }
 }
+
 
 
   // check cache first and only fetch missing ones (but pMap fetch handles cache)

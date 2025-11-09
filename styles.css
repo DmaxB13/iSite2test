@@ -30,19 +30,27 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 40px;
   margin-top: 20px;
 }
 
 .mannequin {
   width: 200px;
   text-align: center;
+  perspective: 400px; /* Needed for 3D rotation effect */
 }
 
 .mannequin img {
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 0 12px rgba(0,0,0,0.6);
+  transform-style: preserve-3d;
+  animation: rotate360 10s linear infinite;
+}
+
+@keyframes rotate360 {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
 }
 
 .player-label {

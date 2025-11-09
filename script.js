@@ -1,4 +1,4 @@
-// Import SkinViewer from ES module CDN
+// Use SkinViewer from ES module CDN
 import { SkinViewer, WalkingAnimation } from "https://unpkg.com/skinview3d@3.0.0-beta.2/dist/skinview3d.min.js";
 
 const input = document.getElementById("names");
@@ -40,7 +40,7 @@ function renderViewer(uuid, name) {
   viewer.autoRotateSpeed = 0.5;
   viewer.zoom = 0.8;
   viewer.controls.enableZoom = false;
-  viewer.animation = new WalkingAnimation(); // optional pose
+  viewer.animation = new WalkingAnimation(); // mannequin pose
 
   const label = document.createElement("div");
   label.className = "player-label";

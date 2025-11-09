@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('skinCanvas');
 
   // Put the UUID of the player whose skin you want to display here
-  const PLAYER_UUID = '069a79f444e94726a5befca90e38aaf5'; // Example: Notch
+  const PLAYER_UUID = '11e9093e-c7f1-41cd-945b-fee11e335ec3'; // Example: Notch
 
   // Build the skin URL from Crafatar (works for UUID)
   const skinUrl = `https://crafatar.com/skins/${PLAYER_UUID}`;

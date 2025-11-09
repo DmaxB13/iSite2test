@@ -37,7 +37,7 @@ button {
 .mannequin {
   width: 200px;
   text-align: center;
-  perspective: 400px; /* Needed for 3D rotation effect */
+  perspective: 400px;
 }
 
 .mannequin img {

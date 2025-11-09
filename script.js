@@ -150,3 +150,25 @@ clearCacheBtn.addEventListener('click', () => {
   saveCache(cache);
   showStatus('Cache cleared');
 });
+
+// create viewer once
+let viewer;
+function setupViewer() {
+  const container = document.getElementById("viewerContainer");
+  container.innerHTML = ""; // clear existing canvas
+  viewer = new skinview3d.SkinViewer({
+    canvas: document.createElement("canvas"),
+    width: container.clientWidth,
+    height: container.clientHeight
+  });
+  container.appendChild(viewer.canvas);
+
+  viewer.controls.enableZoom = false;
+  viewer.zoom = 0.8;
+
+  // Add basic animations
+  viewer.animation = new skinview3d.WalkingAnimation();
+  viewer.animation.speed = 1;
+  return viewer;
+}
+

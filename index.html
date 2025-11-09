@@ -3,36 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Minecraft Mannequins — Skins on 3D</title>
+  <title>Minecraft 3D Mannequins</title>
 
-  <!-- skinview3d bundle (WebGL skin renderer) -->
-  <script src="https://unpkg.com/skinview3d@3.0.0-beta.2/bundles/skinview3d.bundle.js" defer></script>
+  <!-- Load the skinview3d renderer BEFORE your script -->
+  <script src="https://unpkg.com/skinview3d@3.0.0-beta.2/bundles/skinview3d.bundle.js"></script>
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="container">
-    <header>
-      <h1>Minecraft Mannequins</h1>
-      <p class="muted">Enter Minecraft usernames or UUIDs (comma separated). Each player will render on a 3D mannequin.</p>
-    </header>
+    <h1>Minecraft 3D Mannequins</h1>
+    <p>Enter usernames or UUIDs (comma separated):</p>
 
-    <section class="controls">
-      <textarea id="names" placeholder="Notch, Dinnerbone, 069a79f444e94726a5befca90e38aaf5" rows="2"></textarea>
-      <div class="buttons">
-        <button id="loadBtn">Load &amp; Render</button>
-        <button id="clearCacheBtn">Clear Cache</button>
-      </div>
-      <div id="status" class="status">Idle</div>
-    </section>
+    <textarea id="names" placeholder="Notch, Dinnerbone, 069a79f444e94726a5befca90e38aaf5"></textarea>
+    <button id="loadBtn">Load &amp; Render</button>
+    <div id="status">Ready</div>
 
-    <section id="viewGrid" class="view-grid" aria-live="polite">
-      <!-- viewers/cards will be injected here -->
-    </section>
-
-    <footer class="foot">
-      <small>Uses PlayerDB (username → UUID) and Crafatar (skins). Rendering by skinview3d.</small>
-    </footer>
+    <div id="gallery" class="gallery"></div>
   </main>
 
-  <script src="s
+  <script src="script.js"></script>
+</body>
+</html>
